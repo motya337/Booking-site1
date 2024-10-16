@@ -1,0 +1,100 @@
+/* Основні стилі */
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9; /* Light cream */
+    color: #333333; /* Dark slate gray */
+}
+
+header {
+    background-color: #4db8b1; /* Soft teal */
+    padding: 10px 0;
+    text-align: center;
+}
+
+.nav-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+    .nav-menu li {
+        margin: 0 15px;
+    }
+
+    .nav-menu a {
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        transition: color 0.3s ease;
+    }
+
+        .nav-menu a:hover {
+            color: #ff6f61; /* Warm coral */
+        }
+
+/* Основний контент */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #4db8b1; /* Soft teal */
+    margin-bottom: 20px;
+}
+
+.facility-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.facility-item {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 300px;
+    margin: 15px;
+    padding: 20px;
+    text-align: left;
+}
+
+    .facility-item h2 {
+        color: #4db8b1; /* Soft teal */
+        margin-top: 0;
+    }
+
+    .facility-item p {
+        margin: 10px 0;
+    }
+
+.btn-reserve {
+    display: inline-block;
+    background-color: #4db8b1; /* Soft teal */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-reserve:hover {
+        background-color: #ff6f61; /* Warm coral */
+    }
+
+/* Footer */
+footer {
+    background-color: #4db8b1; /* Soft teal */
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 30px;
+}
+
+    footer p {
+        margin: 0;
+    }
