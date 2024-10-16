@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+   
+    <title>User Profile</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>User Profile</h1>
+        <section id="booking-list">
+            <h2>Your Bookings</h2>
+            <ul>
+                <!-- Bookings will be populated here -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Reservation System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load bookings from local storage
+        const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        const bookingList = document.getElementById('booking-list').querySelector('ul');
+
+        bookings.forEach(booking => {
+            const li = document.createElement('li');
+            li.innerText = `${booking.name} booked ${booking.facility} on ${booking.date}`;
+            bookingList.appendChild(li);
+        });
+
+        if (bookings.length === 0) {
+            bookingList.innerHTML = '<li>No bookings found.</li>';
+        }
+    </script>
+</body>
+</html>

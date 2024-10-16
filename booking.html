@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Booking</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="user_cabinet.html">Personal Account</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Booking Form</h1>
+        <form id="booking-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="booking-date" name="date" required>
+
+            <input type="hidden" id="facility-name" name="facility-name">
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Reservation System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Get facility name from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const facilityName = urlParams.get('facility');
+
+        // Set facility name in hidden input
+        document.getElementById('facility-name').value = facilityName;
+
+        // Handle form submission
+        document.getElementById('booking-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const date = document.getElementById('booking-date').value;
+
+            const bookingData = {
+                name,
+                email,
+                date,
+                facility: facilityName
+            };
+
+            // Save booking data to local storage
+            let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            bookings.push(bookingData);
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+
+            // Show confirmation message
+            alert('Booking confirmed!');
+
+            // Redirect to the user profile
+            window.location.href = 'user_cabinet.html';
+        });
+    </script>
+</body>
+</html>

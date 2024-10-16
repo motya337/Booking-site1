@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Reservation</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="user_cabinet.html">Personal Account</a></li> <!-- Link to User Account -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Available Facilities for Booking</h1>
+        <form id="filter-form">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="ticket-type">Type:</label>
+            <select id="ticket-type" name="ticket-type">
+                <option value="">All</option>
+                <option value="room">Room</option>
+                <option value="table">Table</option>
+                <option value="ticket">Ticket</option>
+            </select>
+
+            <label for="price">Max Price:</label>
+            <input type="number" id="price" name="price" placeholder="Enter max price" min="0">
+
+            <button type="submit">Search</button>
+        </form>
+
+        <section class="facility-list" id="facility-list">
+            <ul>
+                <!-- Facilities will be populated here dynamically -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Reservation System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Sample data for facilities
+        const facilities = [
+            { name: 'Hotel "Forest Glade"', description: 'Comfortable rooms near the forest with a view of the mountains.', price: 1200, type: 'room' },
+            { name: 'Restaurant "Golden Lion"', description: 'Elegant restaurant with a wide selection of European cuisine.', price: 500, type: 'table' },
+            { name: 'Event "Concert at the Stadium"', description: 'Musical concert of a popular band in the city center.', price: 300, type: 'ticket' },
+            { name: 'Hotel "Sunny Beach"', description: 'Rooms on the first line by the sea with a private beach.', price: 2000, type: 'room' },
+            { name: 'Restaurant "Eastern Cuisine"', description: 'Delicious dishes of Asian cuisine in a traditional style.', price: 600, type: 'table' },
+            { name: 'Hotel "Mountain View"', description: 'Luxury rooms with breathtaking mountain views.', price: 1500, type: 'room' },
+            { name: 'Restaurant "Skyline"', description: 'Sky-high restaurant with panoramic views and gourmet meals.', price: 700, type: 'table' },
+            { name: 'Event "Theater Performance"', description: 'An evening of cultural performances at the local theater.', price: 250, type: 'ticket' },
+            { name: 'Hotel "Lakeside Retreat"', description: 'Peaceful retreat by the lake with cozy accommodations.', price: 1800, type: 'room' },
+            { name: 'Restaurant "Italian Delights"', description: 'Authentic Italian cuisine with fresh ingredients.', price: 550, type: 'table' },
+            { name: 'Event "Art Exhibition"', description: 'Explore contemporary art at a local gallery.', price: 200, type: 'ticket' }
+        ];
+
+        // Function to display facilities
+        function displayFacilities(facilities) {
+            const facilityList = document.getElementById('facility-list').querySelector('ul');
+            facilityList.innerHTML = ''; // Clear existing facilities
+
+            facilities.forEach(facility => {
+                const li = document.createElement('li');
+                li.className = 'facility-item';
+                li.innerHTML = `
+                        <h2>${facility.name}</h2>
+                        <p>${facility.description}</p>
+                        <p>Price: <strong>${facility.price} uah</strong></p>
+                        <a class="btn-reserve" href="booking.html?facility=${encodeURIComponent(facility.name)}&price=${facility.price}">Reserve</a>
+                    `;
+                facilityList.appendChild(li);
+            });
+        }
+
+        // Filter function
+        document.getElementById('filter-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+            const date = document.getElementById('date').value;
+            const ticketType = document.getElementById('ticket-type').value;
+            const maxPrice = document.getElementById('price').value;
+
+            // Filter facilities based on user input
+            const filteredFacilities = facilities.filter(facility => {
+                const typeMatch = ticketType ? facility.type === ticketType : true;
+                const priceMatch = maxPrice ? facility.price <= maxPrice : true;
+
+                return typeMatch && priceMatch;
+            });
+
+            displayFacilities(filteredFacilities);
+        });
+
+        // Initial display of all facilities
+        displayFacilities(facilities);
+    </script>
+</body>
+</html>
