@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <title>Booking</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
         <nav>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="user_cabinet.html">Personal Account</a></li>
+                <li><a href="user_cabinet.html">Personal Account</a></li> <!-- Link to User Account -->
             </ul>
         </nav>
     </header>
@@ -28,7 +28,14 @@
             <label for="date">Date:</label>
             <input type="date" id="booking-date" name="date" required>
 
+            <label for="num-people">Number of People:</label>
+            <input type="number" id="num-people" name="num-people" min="1" value="1" required>
+
+            <p>Total Price: <strong id="total-price">0</strong> uah</p>
+
             <input type="hidden" id="facility-name" name="facility-name">
+            <input type="hidden" id="price-per-person" name="price-per-person">
+            <input type="hidden" id="total-price-hidden" name="total-price-hidden">
 
             <button type="submit">Confirm Booking</button>
         </form>
@@ -39,12 +46,33 @@
     </footer>
 
     <script>
-        // Get facility name from the URL
+        // Get parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const facilityName = urlParams.get('facility');
+        const pricePerPerson = parseFloat(urlParams.get('price')) || 0;
+        const facilityIndex = parseInt(urlParams.get('index')) || 0;
 
-        // Set facility name in hidden input
+        // Set facility name and price in hidden inputs
         document.getElementById('facility-name').value = facilityName;
+        document.getElementById('price-per-person').value = pricePerPerson;
+
+        // Set initial total price
+        const numPeopleInput = document.getElementById('num-people');
+        const totalPriceElement = document.getElementById('total-price');
+        const totalPriceHidden = document.getElementById('total-price-hidden');
+
+        function updateTotalPrice() {
+            const numPeople = parseInt(numPeopleInput.value) || 1;
+            const totalPrice = pricePerPerson * numPeople;
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+            totalPriceHidden.value = totalPrice;
+        }
+
+        // Initial price calculation
+        updateTotalPrice();
+
+        // Update total price when number of people changes
+        numPeopleInput.addEventListener('input', updateTotalPrice);
 
         // Handle form submission
         document.getElementById('booking-form').addEventListener('submit', function (e) {
@@ -53,12 +81,16 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const date = document.getElementById('booking-date').value;
+            const numPeople = parseInt(document.getElementById('num-people').value) || 1;
+            const totalPrice = parseFloat(document.getElementById('total-price-hidden').value);
 
             const bookingData = {
                 name,
                 email,
                 date,
-                facility: facilityName
+                facility: facilityName,
+                numPeople,
+                totalPrice
             };
 
             // Save booking data to local storage
@@ -66,11 +98,9 @@
             bookings.push(bookingData);
             localStorage.setItem('bookings', JSON.stringify(bookings));
 
-            // Show confirmation message
-            alert('Booking confirmed!');
-
-            // Redirect to the user profile
-            window.location.href = 'user_cabinet.html';
+            // Show confirmation message and redirect
+            alert(`Booking confirmed for ${name} at ${facilityName} on ${date} for ${numPeople} people. Total price: ${totalPrice} uah.`);
+            window.location.href = 'index.html'; // Redirect to home page
         });
     </script>
 </body>

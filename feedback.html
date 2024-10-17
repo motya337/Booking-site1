@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Section</title>
+    <style>
+        .feedback-section {
+            margin: 20px auto;
+            padding: 30px;
+            max-width: 600px; /* Задаємо максимальну ширину */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Тінь для об'ємності */
+        }
+
+            .feedback-section h2 {
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: #333;
+                text-align: center; /* Вирівнюємо заголовок по центру */
+            }
+
+            .feedback-section label {
+                display: block;
+                margin: 10px 0 5px;
+                font-weight: bold; /* Жирний текст для етикеток */
+                color: #555; /* Трохи світліший колір */
+            }
+
+            .feedback-section input,
+            .feedback-section textarea {
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px; /* Збільшуємо розмір шрифту */
+                transition: border-color 0.3s ease; /* Плавна анімація при фокусі */
+            }
+
+                .feedback-section input:focus,
+                .feedback-section textarea:focus {
+                    border-color: #007bff; /* Змінюємо колір рамки при фокусі */
+                    outline: none; /* Видаляємо стандартне обведення */
+                }
+
+            .feedback-section button {
+                background-color: #007bff; /* Основний колір кнопки */
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px; /* Збільшуємо розмір шрифту */
+                transition: background-color 0.3s ease; /* Плавна анімація при наведені */
+                width: 100%; /* Кнопка займає всю ширину */
+            }
+
+                .feedback-section button:hover {
+                    background-color: #0056b3; /* Темніший колір при наведені */
+                }
+
+        .feedback-response {
+            margin-top: 20px;
+            color: #28a745; /* Зелений колір для підтвердження */
+            font-size: 18px;
+            text-align: center; /* Вирівнюємо відповідь по центру */
+        }
+    </style>
+</head>
+<body>
+    <section class="feedback-section">
+        <h2> Leave Your Feedback</h2>
+        <form id="feedback-form">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Your Feedback:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+        <div id="feedback-response" class="feedback-response"></div>
+    </section>
+    <script>
+        document.getElementById('feedback-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get the input values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Display feedback response
+            const responseDiv = document.getElementById('feedback-response');
+            responseDiv.innerHTML = `Thank you, ${name}! Your feedback has been submitted: "${message}"`;
+
+            // Clear the form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

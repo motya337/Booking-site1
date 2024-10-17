@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-   
-    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>User Cabinet</title>
 </head>
 <body>
     <header>
         <nav>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="user_cabinet.html">Personal Account</a></li>
             </ul>
         </nav>
     </header>
@@ -35,14 +35,33 @@
         const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
         const bookingList = document.getElementById('booking-list').querySelector('ul');
 
-        bookings.forEach(booking => {
+        bookings.forEach((booking, index) => {
             const li = document.createElement('li');
-            li.innerText = `${booking.name} booked ${booking.facility} on ${booking.date}`;
+            li.className = 'booking-item';
+            li.innerHTML = `
+                    <h3>Booking ${index + 1}</h3>
+                    <p><strong>Name:</strong> ${booking.name}</p>
+                    <p><strong>Email:</strong> ${booking.email}</p>
+                    <p><strong>Facility:</strong> ${booking.facility}</p>
+                    <p><strong>Date:</strong> ${booking.date}</p>
+                    <p><strong>Number of People:</strong> ${booking.numPeople}</p>
+                    <p><strong>Total Price:</strong> ${booking.totalPrice} uah</p>
+                    <button onclick="cancelBooking(${index})">Cancel Booking</button>
+                `;
             bookingList.appendChild(li);
         });
 
         if (bookings.length === 0) {
             bookingList.innerHTML = '<li>No bookings found.</li>';
+        }
+
+        // Function to cancel a booking
+        function cancelBooking(index) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                bookings.splice(index, 1);
+                localStorage.setItem('bookings', JSON.stringify(bookings));
+                location.reload(); // Reload the page to update the list
+            }
         }
     </script>
 </body>
